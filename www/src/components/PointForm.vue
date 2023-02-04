@@ -36,9 +36,21 @@ const farthestPoints = computed(() => {
 
 const isChanged = computed(() => {
     if(props.data?.id) {
-        return (point.name && point.x && point.y) && (point.name !== props.data.name || point.x !== props.data.x || point.y !== props.data.y)
+        return !!((point.name || point.x || point.y) && (point.name !== props.data.name || point.x !== props.data.x || point.y !== props.data.y))
     }
-    return point.name && point.x && point.y
+    return !!(point.name || point.x || point.y)
+})
+
+const isUnique = computed(() => {
+    return pointsStore.isUnique(point)
+})
+
+const isComplete = computed(() => {
+    return !!point.name && !!point.x && !!point.y
+})
+
+const isValid = computed(() => {
+    return !!(isUnique.value && isChanged.value && isComplete.value)
 })
 
 const isNew = computed(() => {
@@ -104,7 +116,7 @@ function handleSave() {
     if(props.data) {
         saving.value = true
         api.points
-            .update(point.id, {id: point.id, name: point.name, x: point.x, y: point.y})
+            .update(point.id, {id: point.id, name: point.name.trim(), x: point.x, y: point.y})
             .then((response) => {
                 syncAndClose()
             })
@@ -118,7 +130,7 @@ function handleSave() {
     else {
         saving.value = true
         api.points
-            .create({name: point.name, x: point.x, y: point.y})
+            .create({name: point.name.trim(), x: point.x, y: point.y})
             .then((response) => {
                 syncAndClose()
             })
@@ -142,9 +154,9 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <div v-if="!isNew" class="flex space-x-4 justify-end">
+    <div class="flex space-x-4 justify-end">
         <sl-button variant="default" @click="handleReset" :disabled="!isChanged">Reset</sl-button>
-        <sl-button variant="danger" @click="handleDelete">Delete</sl-button>
+        <sl-button v-if="!isNew" variant="danger" @click="handleDelete" :disabled="!isChanged">Delete</sl-button>
     </div>
     <div class="flex flex-col mb-6">
         <sl-input label="Name" v-model="point.name"></sl-input>
@@ -163,9 +175,12 @@ onBeforeMount(() => {
             <PointList :points="farthestPoints"></PointList>
         </div>
     </div>
+    <div v-if="!isUnique">
+        <span class="text-amber-600">Please enter an unique name and coordinates.</span>
+    </div>
     <div class="flex space-x-4 justify-end">
         <sl-button @click="handleClose">Cancel</sl-button>
-        <sl-button variant="success" @click="handleSave" :disabled="!isChanged">Save</sl-button>
+        <sl-button variant="success" @click="handleSave" :disabled="!isValid">Save</sl-button>
     </div>
 </template>
 
