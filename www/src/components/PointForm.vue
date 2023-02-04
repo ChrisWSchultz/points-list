@@ -153,7 +153,7 @@ onBeforeMount(() => {
             <sl-input label="Y" v-model="point.y" type="number" class="w-full"></sl-input>
         </div>
     </div>
-    <div v-if="distances.map">
+    <div v-if="distances.map && !isNew">
         <div class="mb-6">
             <span>Nearest points at distance {{ distances.closest }}:</span>
             <PointList :points="closestPoints"></PointList>
