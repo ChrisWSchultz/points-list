@@ -55,5 +55,13 @@ export const usePointsStore = defineStore('points', () => {
         return round(Math.sqrt(x * x + y * y), 1);
     }
 
-    return { state, get, distances }
+    function isUnique(point) {
+        let points = toRaw(state.points)
+
+        return !points.filter((p) => {
+           if(point.id !== p.id) return p.name === point.name || (p.x === point.x && p.y === point.y)
+        }).length
+    }
+
+    return { state, get, distances, isUnique }
 })
