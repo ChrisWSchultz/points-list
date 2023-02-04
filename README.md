@@ -41,11 +41,13 @@ Create a .env from the .env.example:
 ```
 Update the base URL as needed.
 
+Install node_modules:
 ```shell
 > cd points-list/www
 > yarn install
 ```
 
+Run dev server:
 ```shell
 > yarn run dev
 ```
