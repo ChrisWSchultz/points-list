@@ -2,6 +2,7 @@
 
 ## API
 The API was built using the Django Rest Framework. https://www.django-rest-framework.org/
+
 Poetry was used to create a virtual environment for the python side: https://python-poetry.org/
 
 Start a shell & install the dependencies:
