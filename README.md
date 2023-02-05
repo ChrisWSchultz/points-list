@@ -12,12 +12,12 @@ Start a shell & install the dependencies:
 > poetry install
 ```
 
-If needed run migrations:
+If needed, run migrations:
 ```shell
 > python manage.py migrate
 ```
 
-Create a .env from the .env.example:
+Create an `.env` file from `.env.example`:
 ```shell
 > cd points-list/api/app
 > cp .env.example .env
