@@ -46,7 +46,7 @@ const isUnique = computed(() => {
 })
 
 const isComplete = computed(() => {
-    return !!point.name && !!point.x && !!point.y
+    return notNullOrUndefined(point.name) && notNullOrUndefined(point.x) && notNullOrUndefined(point.y)
 })
 
 const isValid = computed(() => {
@@ -62,6 +62,10 @@ watch(point, (newValue, oldValue) => {
         getDistances(point.id, point.x, point.y)
     }
 })
+
+function notNullOrUndefined(value) {
+    return value !== null && value !== undefined
+}
 
 function getDistances(id, x, y) {
     const d = pointsStore.distances(id, x, y)
