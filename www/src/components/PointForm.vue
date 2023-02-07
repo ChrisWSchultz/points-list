@@ -160,7 +160,7 @@ onBeforeMount(() => {
 <template>
     <div class="flex space-x-4 justify-end">
         <sl-button variant="default" @click="handleReset" :disabled="!isChanged">Reset</sl-button>
-        <sl-button v-if="!isNew" variant="danger" @click="handleDelete" :disabled="!isChanged">Delete</sl-button>
+        <sl-button v-if="!isNew" variant="danger" @click="handleDelete">Delete</sl-button>
     </div>
     <div class="flex flex-col mb-6">
         <sl-input label="Name" v-model="point.name"></sl-input>
