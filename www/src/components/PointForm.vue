@@ -1,6 +1,8 @@
 <script setup>
 import { inject, onBeforeMount, ref, reactive, computed, watch } from 'vue'
 import { usePointsStore } from '@/stores/points'
+import { round } from 'lodash'
+
 import PointList from '@/components/PointList.vue'
 import '@shoelace-style/shoelace/dist/components/input/input.js'
 import '@shoelace-style/shoelace/dist/components/button/button.js'
@@ -171,11 +173,11 @@ onBeforeMount(() => {
     </div>
     <div v-if="distances.map && !isNew">
         <div class="mb-6">
-            <span>Nearest points at distance {{ distances.closest }}:</span>
+            <span>Nearest point<span v-if="closestPoints.length > 1">s</span> at distance {{ round(distances.closest, 1) }}:</span>
             <PointList :points="closestPoints"></PointList>
         </div>
         <div class="mb-6">
-            <span>Farthest points at distance {{ distances.farthest }}:</span>
+            <span>Farthest point<span v-if="farthestPoints.length > 1">s</span> at distance {{ round(distances.farthest, 1) }}:</span>
             <PointList :points="farthestPoints"></PointList>
         </div>
     </div>

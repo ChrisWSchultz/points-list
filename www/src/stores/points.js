@@ -49,10 +49,10 @@ export const usePointsStore = defineStore('points', () => {
     }
 
     function getDistance(x1, y1, x2, y2) {
-        let y = x2 - x1;
-        let x = y2 - y1;
+        let y = x2 - x1
+        let x = y2 - y1
 
-        return round(Math.sqrt(x * x + y * y), 1);
+        return Math.sqrt(x * x + y * y)
     }
 
     function isUnique(point) {
